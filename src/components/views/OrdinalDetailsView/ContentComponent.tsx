@@ -18,13 +18,10 @@ const ContentComponent = ({ url }: { url: string }) => {
         }
 
         const text = await response.text();
-
-        // Rewrite relative paths to absolute paths
         const baseUrl = "https://ord.xverse.app/";
         const parser = new DOMParser();
         const doc = parser.parseFromString(text, "text/html");
 
-        // Update relative links and assets
         ["src", "href"].forEach((attr) => {
           doc.querySelectorAll(`[${attr}]`).forEach((el) => {
             const attrValue = el.getAttribute(attr);
@@ -89,7 +86,6 @@ const ContentComponent = ({ url }: { url: string }) => {
   if (!content) return null;
 
   if (isHtml(content)) {
-    // Embed the HTML content directly
     return (
       <div className="w-full h-full [&>html]:h-full">
         <iframe

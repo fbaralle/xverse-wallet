@@ -4,7 +4,7 @@ import {
   ReactNode,
   useCallback,
   useState,
-} from 'react';
+} from "react";
 
 interface ImageWithFallbackProps
   extends DetailedHTMLProps<
@@ -24,15 +24,15 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
   alt,
   ...props
 }) => {
-  const [currentImage, setCurrentImage] = useState(urls[0]); // Start with the first image
-  const [index, setIndex] = useState(0); // Track the index of the current image
+  const [currentImage, setCurrentImage] = useState(urls[0]);
+  const [index, setIndex] = useState(0);
 
   const handleError = useCallback(() => {
     if (index < urls.length - 1) {
-      setIndex((prevIndex) => prevIndex + 1); // Move to the next image in the array
-      setCurrentImage(urls[index + 1]); // Set the new current image
+      setIndex((prevIndex) => prevIndex + 1);
+      setCurrentImage(urls[index + 1]);
     } else {
-      setCurrentImage(fallback || ''); // If all images fail, set to fallback image
+      setCurrentImage(fallback || "");
     }
   }, [urls, fallback, index]);
 
