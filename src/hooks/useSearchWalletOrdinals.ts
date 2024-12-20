@@ -41,12 +41,15 @@ export const useSearchWalletOrdinals = ({
     queryFn: async () => {
       try {
         const { data: resData } = await apiClient.get<any>(
-          `/v1/address/${address}/ordinal-utxo `,
+          `/v1/address/${address}/ordinal-utxo`,
           {
+            params: {
+              offset: 31,
+            },
             timeout: 10_000,
           }
         );
-
+        console.log(resData);
         return resData;
       } catch (e) {
         // const errorMessage = (e as Error).message ?? 'Error';

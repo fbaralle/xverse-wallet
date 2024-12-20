@@ -8,6 +8,7 @@ import { ChevronLeftIcon, PuzzlePieceIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import Attribute from "./Attribute";
 import ContentComponent from "./ContentComponent";
+import NoSsr from "@/components/molecules/NoSsr";
 
 export const revalidate = COMMON_DURATIONS[DurationsEnum.ThirtyMinutes];
 
@@ -61,13 +62,16 @@ const OrdinalDetailsView: React.FC<OrdinalDataProps> = async ({ data }) => {
     collection_name,
     sat_ordinal,
     sat_rarity,
+    content_type,
     value,
   } = data;
   const contentUrl = `https://ord.xverse.app/content/${id}`;
 
   const isImage =
-    mime_type.startsWith("image/") &&
-    !excludedTypes.some((type) => mime_type.includes(type));
+    content_type &&
+    mime_type &&
+    mime_type?.startsWith("image/") &&
+    !excludedTypes.some((type) => mime_type?.includes(type));
 
   return (
     <BasicPageWrapper>
