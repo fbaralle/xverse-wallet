@@ -6,6 +6,7 @@ const getOrdinalData = async (address: string, ordinalId: string) => {
     const { data } = await axios.get(
       `https://api-3.xverse.app/v1/address/${address}/ordinals/inscriptions/${ordinalId}`
     );
+    console.log(data);
     return data;
   } catch (e) {
     return null;

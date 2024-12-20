@@ -1,4 +1,5 @@
 "use client";
+
 import Text from "@/components/atoms/Text";
 import { BasicPageWrapper } from "@/components/molecules/BasicPageWrapper";
 import ImageWithFallback from "@/components/molecules/ImageWithFallback";
@@ -6,6 +7,7 @@ import { COMMON_DURATIONS, DurationsEnum } from "@/constants/time";
 import { ChevronLeftIcon, PuzzlePieceIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import Attribute from "./Attribute";
+import ContentComponent from "./ContentComponent";
 
 export const revalidate = COMMON_DURATIONS[DurationsEnum.ThirtyMinutes];
 
@@ -45,6 +47,8 @@ interface OrdinalDataProps {
   };
 }
 
+const excludedTypes = ["svg+xml", "other-rare-case"];
+
 const OrdinalDetailsView: React.FC<OrdinalDataProps> = async ({ data }) => {
   const {
     number,
@@ -59,8 +63,12 @@ const OrdinalDetailsView: React.FC<OrdinalDataProps> = async ({ data }) => {
     sat_rarity,
     value,
   } = data;
-  const imageUrl = `https://ord.xverse.app/content/${id}`;
-  const isImage = mime_type.includes("image");
+  const contentUrl = `https://ord.xverse.app/content/${id}`;
+
+  const isImage =
+    mime_type.startsWith("image/") &&
+    !excludedTypes.some((type) => mime_type.includes(type));
+
   return (
     <BasicPageWrapper>
       <div className="flex w-full flex-1 flex-col items-center max-w-[500px]">
@@ -76,14 +84,11 @@ const OrdinalDetailsView: React.FC<OrdinalDataProps> = async ({ data }) => {
           {isImage ? (
             <ImageWithFallback
               alt="Ordinal image"
-              urls={[imageUrl]}
+              urls={[contentUrl]}
               className="object-cover size-full"
             />
           ) : (
-            <div className="bg-black flex flex-col items-center justify-center size-full gap-5">
-              <PuzzlePieceIcon className="size-10" />
-              <Text variant="bodySmMedium">Content is not an image</Text>
-            </div>
+            <ContentComponent url={contentUrl} />
           )}
         </div>
         <div className="px-2 w-full mb-3">
