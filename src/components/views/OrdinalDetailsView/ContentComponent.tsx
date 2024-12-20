@@ -7,6 +7,7 @@ const ContentComponent = ({ url }: { url: string }) => {
   const { content, isLoading, error } = useContent(url);
 
   if (isLoading) return <Skeleton className="size-full" />;
+
   if (error) return <div>Error: {error.message}</div>;
 
   const isJson = (str: string) => {
@@ -19,6 +20,7 @@ const ContentComponent = ({ url }: { url: string }) => {
   };
 
   const isSvgOrHtml = (str: string) => {
+    if (typeof str !== "string") return false;
     const trimmedStr = str.trim();
     return (
       trimmedStr.startsWith("<svg") ||
