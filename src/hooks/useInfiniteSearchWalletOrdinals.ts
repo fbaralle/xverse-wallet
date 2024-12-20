@@ -48,7 +48,11 @@ export const useInfiniteSearchWalletOrdinals = ({
         const response = {
           results: resData.results,
           nextOffset:
-            resData.results.length === PAGE_SIZE ? pageParam + PAGE_SIZE : null,
+            resData.results.length === PAGE_SIZE
+              ? pageParam + PAGE_SIZE < resData.total
+                ? pageParam + PAGE_SIZE
+                : resData.total
+              : null,
         };
 
         console.log(response);

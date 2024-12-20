@@ -24,9 +24,6 @@ const HomePageView: React.FC<HomePageViewProps> = ({ initialData }) => {
     handleOnClearInput,
   } = useSearchFilter();
 
-  // const { data, isLoading, onSearch, walletAddress } = useSearchWalletOrdinals({
-  //   address: searchInput,
-  // });
   const {
     results,
     isLoading,
@@ -38,8 +35,6 @@ const HomePageView: React.FC<HomePageViewProps> = ({ initialData }) => {
   } = useInfiniteSearchWalletOrdinals({
     address: searchInput,
   });
-
-  console.log(results);
 
   return (
     <BasicPageWrapper>
