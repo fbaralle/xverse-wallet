@@ -27,15 +27,14 @@ const HomePageView: React.FC<HomePageViewProps> = ({ initialData }) => {
     address: searchInput,
   });
 
-  console.log("RESULTS", data);
   return (
     <BasicPageWrapper>
       <div className="flex w-full flex-1 flex-col items-center max-w-[500px]">
-        <Text as="h1" variant="bodyLg-med" className="!text-lg">
+        <Text as="h1" className="!text-lg px-3 py-5">
           Ordinal Inscription Lookup
         </Text>
-        <div className="flex w-full mb-6 flex-col gap-2 items-center">
-          <Text as="label" variant="bodyLg-med">
+        <div className="flex w-full mb-6 flex-col gap-2">
+          <Text as="label" variant="bodyLgSemibold">
             Owner Bitcoin Address
           </Text>
           <SearchInput
@@ -51,7 +50,7 @@ const HomePageView: React.FC<HomePageViewProps> = ({ initialData }) => {
             Look up
           </Button>
         </div>
-        <Text as="h2" className="!text-xl mb-">
+        <Text as="h2" className="!text-lg mb-4 self-start">
           Results
         </Text>
         <div className="flex flex-col w-full items-start gap-3">

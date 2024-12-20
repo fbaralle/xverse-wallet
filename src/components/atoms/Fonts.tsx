@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { Inter } from 'next/font/google';
+import { Montserrat } from "next/font/google";
 
-export const interFont = Inter({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '700'],
-  display: 'swap',
+export const interFont = Montserrat({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "700"],
+  display: "swap",
 });
 
 export const Fonts = () => {
