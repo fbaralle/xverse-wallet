@@ -64,7 +64,7 @@ const HomePageView: React.FC<HomePageViewProps> = ({ initialData }) => {
                 ))}
             </div>
           ) : (
-            data?.results.map((item) => {
+            data?.results.map((item: any) => {
               const ordinalId = item?.inscriptions?.[0].id;
               return (
                 <div
