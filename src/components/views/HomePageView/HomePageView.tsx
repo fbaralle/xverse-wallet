@@ -10,6 +10,7 @@ import { ChevronRightIcon } from "@heroicons/react/24/solid";
 import { truncateString } from "@/helpers/truncate-string";
 import Link from "next/link";
 import { Button } from "@/components/atoms/Button";
+import { useInfiniteSearchWalletOrdinals } from "@/hooks/useInfiniteSearchWalletOrdinals";
 
 export interface HomePageViewProps {
   initialData?: any;
@@ -23,9 +24,22 @@ const HomePageView: React.FC<HomePageViewProps> = ({ initialData }) => {
     handleOnClearInput,
   } = useSearchFilter();
 
-  const { data, isLoading, onSearch, walletAddress } = useSearchWalletOrdinals({
+  // const { data, isLoading, onSearch, walletAddress } = useSearchWalletOrdinals({
+  //   address: searchInput,
+  // });
+  const {
+    results,
+    isLoading,
+    onSearch,
+    walletAddress,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteSearchWalletOrdinals({
     address: searchInput,
   });
+
+  console.log(results);
 
   return (
     <BasicPageWrapper>
@@ -54,7 +68,7 @@ const HomePageView: React.FC<HomePageViewProps> = ({ initialData }) => {
           Results
         </Text>
         <div className="flex flex-col w-full items-start gap-3">
-          {isLoading && !data?.results?.length ? (
+          {isLoading && !results?.length ? (
             <div className="flex flex-col w-full gap-2">
               {Array(5)
                 .fill("")
@@ -63,25 +77,36 @@ const HomePageView: React.FC<HomePageViewProps> = ({ initialData }) => {
                 ))}
             </div>
           ) : (
-            data?.results.map((item: any) => {
-              const ordinalId = item?.inscriptions?.[0].id;
-              return (
-                <div
-                  key={ordinalId}
-                  className="bg-slate-900 p-3 flex w-full rounded-lg hover:bg-slate-500 transition-all duration-300"
-                >
-                  <Link
-                    href={`/details/${walletAddress}/${ordinalId}`}
-                    className="flex w-full flex-row items-center justify-between"
+            results
+              .filter((it) => !!it?.inscriptions?.[0]?.id)
+              .map((item: any) => {
+                const ordinalId = item?.inscriptions?.[0]?.id;
+                return (
+                  <div
+                    key={ordinalId}
+                    className="bg-slate-900 p-3 flex w-full rounded-lg hover:bg-slate-500 transition-all duration-300"
                   >
-                    <Text>{truncateString(ordinalId, 25, "middle")}</Text>
-                    <ChevronRightIcon className="size-6" />
-                  </Link>
-                </div>
-              );
-            })
+                    <Link
+                      href={`/details/${walletAddress}/${ordinalId}`}
+                      className="flex w-full flex-row items-center justify-between"
+                    >
+                      <Text>{truncateString(ordinalId, 25, "middle")}</Text>
+                      <ChevronRightIcon className="size-6" />
+                    </Link>
+                  </div>
+                );
+              })
           )}
         </div>
+        {hasNextPage && (
+          <Button
+            onClick={() => fetchNextPage()}
+            disabled={isFetchingNextPage}
+            className="bg-[#465AE9] p-3 w-full border-none text-center flex flex-col items-center mt-3"
+          >
+            {isFetchingNextPage ? "Loading..." : "Load More"}
+          </Button>
+        )}
       </div>
     </BasicPageWrapper>
   );
