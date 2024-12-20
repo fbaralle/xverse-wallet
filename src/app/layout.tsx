@@ -36,7 +36,7 @@ export default function RootLayout({
       <Fonts />
       <body className="bg-background-main">
         <ThemeProvider
-          defaultTheme="light"
+          defaultTheme="dark"
           enableSystem={false}
           attribute="class"
           storageKey="theme"
