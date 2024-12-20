@@ -121,7 +121,7 @@ const OrdinalDetailsView: React.FC<OrdinalDataProps> = async ({ data }) => {
             </div>
           )}
         </div>
-        <div className="px-2 w-full">
+        <div className="px-2 w-full mb-3">
           <Text
             as="h2"
             className="py-3 border-b-[1px] border-solid mb-3 border-b-slate-600 flex-1 !text-2xl"
